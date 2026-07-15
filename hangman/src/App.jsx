@@ -5,7 +5,7 @@ import { WrongLettersFunction } from './components/WrongLetters';
 import { LiveDisplay } from './components/Lives';
 import { WordDisplay } from './components/WordDisplay';
 import { GameStatus } from './components/GameStatus';
-
+import background from './assets/background.mp3';
 export const App = () => {
   function pickRandomWord() {
     const word = words[Math.floor(Math.random() * words.length)];
@@ -27,7 +27,8 @@ export const App = () => {
     .join(' ');
   const lives = 7 - wrongLetters.length;
   const win = !display.includes('_');
-  console.log(secretWord);
+  const audio = new Audio(correctSound);
+  audio.play();
   function wordState() {
     setWord(pickRandomWord());
     setGuessedLetters([]);
