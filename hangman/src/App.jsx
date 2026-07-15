@@ -76,7 +76,7 @@ export const App = () => {
         <div className="header-divider"></div>
       </div>
       {win || lives === 0 ? (
-        <GameStatus restart={wordState} won={win} />
+        <GameStatus restart={wordState} won={win} secretWord={secretWord} />
       ) : (
         <>
           <WordDisplay display={display} />
