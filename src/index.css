@@ -1,0 +1,577 @@
+/* index.css - Elegant Hangman Game Styling */
+
+/* Import a beautiful font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+/* CSS Variables for easy theming */
+/* ===== GAME HEADER STYLES ===== */
+.game-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+}
+
+.game-title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #0984e3, #6c5ce7, #00b894);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientTitle 4s ease infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  letter-spacing: -1px;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  position: relative;
+}
+
+@keyframes gradientTitle {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.title-emoji {
+  -webkit-text-fill-color: initial;
+  color: #fdcb6e;
+  font-size: 2.2rem;
+  animation: emojiBounce 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+.title-emoji:last-child {
+  animation-delay: 0.3s;
+}
+
+@keyframes emojiBounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.1);
+  }
+}
+
+.game-subtitle {
+  color: #636e72;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  -webkit-text-fill-color: #636e72;
+  font-family: 'Inter', sans-serif;
+}
+
+.header-divider {
+  width: 80px;
+  height: 4px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, #0984e3, #6c5ce7, #00b894);
+  border-radius: 4px;
+  animation: dividerPulse 2s ease-in-out infinite;
+}
+
+@keyframes dividerPulse {
+  0%,
+  100% {
+    width: 80px;
+    opacity: 1;
+  }
+  50% {
+    width: 120px;
+    opacity: 0.6;
+  }
+}
+
+/* Responsive header */
+@media (max-width: 600px) {
+  .game-title {
+    font-size: 2rem;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .title-emoji {
+    font-size: 1.6rem;
+  }
+
+  .game-subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .game-title {
+    font-size: 1.6rem;
+    gap: 8px;
+  }
+
+  .title-emoji {
+    font-size: 1.3rem;
+  }
+}
+:root {
+  --primary: #2d3436;
+  --secondary: #0984e3;
+  --success: #00b894;
+  --danger: #e17055;
+  --warning: #fdcb6e;
+  --background: #f0f2f5;
+  --card-bg: #ffffff;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 25px 70px rgba(0, 0, 0, 0.12);
+  --radius: 20px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  background: var(--background);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 0;
+  /* BEEP effect for correct guess - subtle pulse animation */
+  animation: bodyBeep 0.5s ease;
+}
+
+/* BEEP animation triggered on correct guess */
+@keyframes bodyBeep {
+  0% {
+    background-color: #f0f2f5;
+  }
+  20% {
+    background-color: #d4edda;
+  }
+  40% {
+    background-color: #f0f2f5;
+  }
+  60% {
+    background-color: #d4edda;
+  }
+  80% {
+    background-color: #f0f2f5;
+  }
+  100% {
+    background-color: #f0f2f5;
+  }
+}
+
+/* Apply beep class via JavaScript when correct guess is made */
+body.beep {
+  animation: bodyBeep 0.6s ease 2;
+}
+
+/* Main App Container */
+#root > div {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Game Container */
+.game-container {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 50px 40px 40px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-container:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Decorative gradient border */
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0984e3, #00b894, #fdcb6e, #e17055);
+  background-size: 300% 100%;
+  animation: gradientMove 4s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Word Display */
+.word-display {
+  text-align: center;
+  padding: 30px 0 20px;
+}
+
+.word-display h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 12px;
+  color: var(--primary);
+  font-family: 'Inter', monospace;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  word-break: break-all;
+}
+
+/* Letter Input Section */
+.letter-input {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.letter-input form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.letter-input input {
+  width: 80px;
+  height: 80px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  border: 3px solid #dfe6e9;
+  border-radius: 16px;
+  outline: none;
+  transition: var(--transition);
+  background: #f8f9fa;
+  color: var(--primary);
+  font-family: 'Inter', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.letter-input input:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 6px rgba(9, 132, 227, 0.12);
+  transform: scale(1.05);
+  background: #ffffff;
+}
+
+.letter-input input::placeholder {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #b2bec3;
+  letter-spacing: 0;
+}
+
+.letter-input button {
+  padding: 14px 48px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0984e3, #6c5ce7);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 24px rgba(9, 132, 227, 0.25);
+}
+
+.letter-input button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(9, 132, 227, 0.35);
+}
+
+.letter-input button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 16px rgba(9, 132, 227, 0.2);
+}
+
+/* Lives Display */
+.lives-display {
+  text-align: center;
+  padding: 15px 0 5px;
+}
+
+.lives-display h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: inline-block;
+  padding: 10px 30px;
+  background: #f8f9fa;
+  border-radius: 50px;
+  border: 2px solid #dfe6e9;
+}
+
+.lives-display span {
+  color: var(--danger);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-left: 4px;
+}
+
+/* Lives indicator dots */
+.lives-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.life-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--success);
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.life-dot.lost {
+  background: #dfe6e9;
+  transform: scale(0.7);
+  opacity: 0.4;
+}
+
+/* Wrong Letters */
+.wrong-letters {
+  text-align: center;
+  padding: 10px 0 0;
+}
+
+.wrong-letters h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #b2bec3;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.wrong-letters h4 {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--danger);
+  min-height: 40px;
+}
+
+.wrong-letters h4 span {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #ffeaa7;
+  border-radius: 8px;
+  animation: wrongLetterPop 0.3s ease;
+  min-width: 30px;
+  text-align: center;
+}
+
+@keyframes wrongLetterPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Game Status (Win/Lose) */
+.game-status {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.game-status h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  animation: statusPop 0.6s ease;
+}
+
+@keyframes statusPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.game-status button {
+  padding: 16px 56px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #00b894, #00cec9);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 24px rgba(0, 184, 148, 0.3);
+}
+
+.game-status button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(0, 184, 148, 0.4);
+}
+
+.game-status button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Win/Lose specific styles */
+.game-status.win h1 {
+  color: var(--success);
+}
+
+.game-status.lose h1 {
+  color: var(--danger);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  #root > div {
+    padding: 0;
+  }
+
+  .game-container {
+    padding: 30px 20px 25px;
+    border-radius: 16px;
+  }
+
+  .word-display h2 {
+    font-size: 2.5rem;
+    letter-spacing: 8px;
+  }
+
+  .letter-input input {
+    width: 64px;
+    height: 64px;
+    font-size: 2rem;
+  }
+
+  .letter-input button {
+    padding: 12px 32px;
+    font-size: 0.9rem;
+  }
+
+  .game-status h1 {
+    font-size: 2.2rem;
+  }
+
+  .wrong-letters h4 {
+    font-size: 1.3rem;
+  }
+
+  .lives-display h3 {
+    font-size: 1rem;
+    padding: 8px 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .word-display h2 {
+    font-size: 1.8rem;
+    letter-spacing: 6px;
+  }
+
+  .letter-input input {
+    width: 56px;
+    height: 56px;
+    font-size: 1.6rem;
+  }
+
+  .game-container {
+    padding: 20px 12px 18px;
+  }
+}
+
+/* Accessibility - Focus styles */
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 3px;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: var(--secondary);
+  color: white;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f2f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b2bec3;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
