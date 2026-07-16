@@ -27,7 +27,7 @@ export const App = () => {
     .join(' ');
   const lives = 7 - wrongLetters.length;
   const win = !display.includes('_');
-  const audio = new Audio(correctSound);
+  const audio = new Audio(background);
   audio.play();
   function wordState() {
     setWord(pickRandomWord());
