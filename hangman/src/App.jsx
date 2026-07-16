@@ -11,7 +11,7 @@ export const App = () => {
     const word = words[Math.floor(Math.random() * words.length)];
     return word;
   }
-  const [secretWord, setWord] = useState(pickRandomWord());
+  const [secretWord, setWord] = useState(pickRandomWord().toLocaleLowerCase());
   const [guessLetter, setLetter] = useState('');
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
@@ -36,7 +36,7 @@ export const App = () => {
   }
   function handleChange(event) {
     const letter = event.target.value;
-    setLetter(letter);
+    setLetter(letter.toLowerCase());
   }
 
   function handleSubmit(event) {
