@@ -1,4 +1,3 @@
-import React from 'react';
 export const GameStatus = ({ restart, won, secretWord }) => {
   return (
     <div className={`game-status ${won ? 'win' : 'lose'}`}>

@@ -1,4 +1,3 @@
-import React from 'react';
 export function LiveDisplay({ lives }) {
   const dots = [];
   for (let i = 0; i < 7; i++) {

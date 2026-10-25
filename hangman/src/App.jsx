@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import words from './components/words';
 import { LetterInput } from './components/LetterInput';
 import { WrongLettersFunction } from './components/WrongLetters';
 import { LiveDisplay } from './components/Lives';
 import { WordDisplay } from './components/WordDisplay';
 import { GameStatus } from './components/GameStatus';
-import background from './assets/background.mp3';
+import { HintPanel } from './components/Hints';
+//import background from './assets/background.mp3';
 export const App = () => {
+  let index = 0;
   function pickRandomWord() {
-    const word = words[Math.floor(Math.random() * words.length)];
+    index = Math.floor(Math.random() * words.length);
+    const word = words[index].word;
     return word;
+  }
+
+  function hintHelper() {
+    const hintToWord = words[index].hint;
+    return hintToWord;
   }
   const [secretWord, setWord] = useState(pickRandomWord().toLocaleLowerCase());
   const [guessLetter, setLetter] = useState('');
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
+  const [hintState, setHint] = useState(hintHelper());
+  const [showHint, setShowHint] = useState(false);
   const display = secretWord
     .split('')
     .map((letter) => {
@@ -27,18 +37,27 @@ export const App = () => {
     .join(' ');
   const lives = 7 - wrongLetters.length;
   const win = !display.includes('_');
-  const audio = new Audio(background);
-  audio.play();
+  //const audio = new Audio(background);
+  //audio.play();
+  useEffect(() => {
+    if (lives === 3) setShowHint(true);
+  }, [lives]);
+
+  useEffect(() => {
+    if (lives < 3) setShowHint(false);
+  }, [lives]);
+
   function wordState() {
     setWord(pickRandomWord());
     setGuessedLetters([]);
     setWrongLetters([]);
+    setHint(hintHelper());
+    setShowHint(false);
   }
   function handleChange(event) {
     const letter = event.target.value;
     setLetter(letter.toLowerCase());
   }
-
   function handleSubmit(event) {
     event.preventDefault();
     if (
@@ -81,7 +100,7 @@ export const App = () => {
       ) : (
         <>
           <WordDisplay display={display} />
-
+          <HintPanel hint={hintState} visible={showHint} />
           <LetterInput
             value={guessLetter}
             changeCall={handleChange}

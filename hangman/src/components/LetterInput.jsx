@@ -1,4 +1,3 @@
-import React from 'react';
 export const LetterInput = ({ submitCall, changeCall, value }) => {
   return (
     <div className="letter-input">
