@@ -41,10 +41,9 @@ export const App = () => {
   //audio.play();
   useEffect(() => {
     if (lives === 3) setShowHint(true);
-  }, [lives]);
-
-  useEffect(() => {
-    if (lives < 3) setShowHint(false);
+    setTimeout(() => {
+      setShowHint(false);
+    }, 30000);
   }, [lives]);
 
   function wordState() {
